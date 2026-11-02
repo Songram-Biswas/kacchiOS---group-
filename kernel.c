@@ -1,7 +1,8 @@
-/* kernel.c - Base kernel with UART serial driver verification (Roll 58) */
+/* kernel.c - Main kernel with Memory Manager Verification (Roll 58) */
 #include "types.h"
 #include "serial.h"
 #include "string.h"
+#include "memory.h"
 
 extern uint8_t __kernel_end[];
 #define MAX_INPUT 128
@@ -18,6 +19,12 @@ void kmain(void) {
     serial_puts("Kernel End Address: ");
     serial_put_hex((uint32_t)__kernel_end);
     serial_puts("\n\n");
+
+    // মেমোরি ম্যানেজার ইনিশিয়ালাইজ করা হলো
+    memory_init();
+
+    // মেমোরি কাজ করছে কিনা দেখার জন্য ছোট্ট একটা টেস্ট ডাম্প কল করতে পারো:
+    memory_dump();
 
     while (1) {
         serial_puts("kacchiOS> ");
